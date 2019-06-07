@@ -1,0 +1,26 @@
+// Place all the styles related to the HomePage controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.borderexample {
+    border-style:solid;
+    border-color:rgb(255, 255, 255);
+    border-width: thin;
+    width: 200px;
+    display: inline-block;
+    font-weight: bold;
+   }
+
+.detailborder {
+    border-style:solid;
+    border-color:rgb(255, 255, 255);
+    border-width: thin;
+    margin-bottom: 20px;
+    display: inline-block;
+    text-align: left;
+    vertical-align: left;
+   }
+
+.pagenumber {
+    font-size: 20pt;
+   }

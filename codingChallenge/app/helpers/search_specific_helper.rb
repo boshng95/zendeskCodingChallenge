@@ -1,0 +1,2 @@
+module SearchSpecificHelper
+end

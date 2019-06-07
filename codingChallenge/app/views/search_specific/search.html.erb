@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CodingChallenge</title>
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+    </head>
+
+<body>
+
+    <h1><%= @title %></h1>
+    <h2><%= @subtitle %></h2>
+    <nav><a href="/">Back To Home</a></nav>
+    
+    <br \>
+
+    <%-# For user to key in the Ticket ID  -%>
+    <%= form_for(@ticketID,  method: :get ) do |f| %>
+
+        Ticket ID: <%= f.text_field :ticketID %>
+        <%= f.submit "Search", class: "btn btn-primary" %>
+
+    <% end %>
+
+    <br \>
+
+    <%-# If ticket ID is retrieve correctly then show ticket information  -%>
+    <%-# else will show error message  -%>
+    
+    <% if @ticketInformation["id"] != nil %>
+        <div>
+            <div class="borderexample"> Ticket ID: </div> 
+                <%= @ticketInformation["id"] %>
+        </div>
+
+        <div>
+            <div class="borderexample">Requester ID: </div> 
+                <%= @ticketInformation["requester_id"] %>
+        </div>
+
+        <div>
+            <div class="borderexample">Assignee ID: </div> 
+                <%= @ticketInformation["assignee_id"] %>
+        </div>
+
+        <div>
+            <div class="borderexample">Ticket Created At: </div> 
+                <%= Time.parse(@ticketInformation["created_at"]).strftime("%Y/%b/%d %H:%M:%S") %>
+        </div>
+
+        <div>
+            <div class="borderexample">Ticket Updated At: </div>
+                <%= Time.parse(@ticketInformation["updated_at"]).strftime("%Y/%b/%d %H:%M:%S") %>
+        </div>
+        
+        <div>
+            <div class="borderexample">Ticket Subject : </div>
+                <%= @ticketInformation["subject"] %>
+        </div>
+
+        <div>
+            <div class="borderexample">Ticket Raw Subject: </div>
+                <%= @ticketInformation["raw_subject"] %>
+        </div>
+
+        <div>
+            <div class="borderexample"> Tags: </div>
+                <%= @ticketInformation["tags"].map { |word| word.to_s.prepend("#")}.join(' ') %>
+        </div>
+
+        <div>
+            <div class="borderexample">Ticket Description: </div>
+                <%= @ticketInformation["description"] %>
+        </div>
+
+    <% elsif @ticketInformation["error"] == "RecordNotFound" %>
+        <p>Please key in Ticket ID within range</p>
+        <p>Ticket ID range from 202 - 301</p>
+    <% elsif @ticketInformation["error"] == "InvalidEndpoint" %>
+        <p>Please key in Ticket ID</p>
+        <p>Ticket ID range from 202 - 301</p>
+    <% end %>
+
+
+
+</body>
+</html>

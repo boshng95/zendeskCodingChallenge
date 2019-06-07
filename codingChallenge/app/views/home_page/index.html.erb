@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CodingChallenge</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+  </head>
+
+    <body>
+        <h1><%= @title %></h1>
+        <h2><%= @subtitle %></h2>
+        <nav class="navbar navbar-expand-sm bg-light">
+        
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/specific">Search Specific Ticket</a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <%-# Showing the range of tickets information accoridng to the parameters in URL  -%>
+        <% numberTicketShown = 25 %>
+        <% start, finish = case params[:page].to_i
+            when 0 then [0, numberTicketShown] %>
+            <% when 2..params[:page].to_i then [params[:page].to_i*numberTicketShown-numberTicketShown, params[:page].to_i*numberTicketShown]; %>
+        <%end%>
+        <% puts finish %>
+        <%-# If data is populated corretly in Array format show all tickets information  -%>
+        <%-# else shows nothing  -%>
+
+        <% if @data.kind_of?(Array) %>
+            
+            <%-# Show page number by creating page dynamically  -%>
+            <% if @data.length > 25 %>
+                <a class="pagenumber" href="/">1</a>
+                <%  (1...(@data.length)/25).each do |index| %>
+                    <a class="pagenumber" href="/?page=<%=index+1 %>">
+                    <%= index+1 %>
+                </a>
+                <% end %>
+            <% end %>
+
+            <%  (start...@data.length).each do |index| %>
+                <% if index < finish %>
+                <div class="card">
+                    <tr>
+                    <div>
+                    <div>Ticket Number: <%= index+1 %></div>
+                    <div class="borderexample">Ticket ID:</div>
+                        <td ><%= @data[index]["id"] %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Requester ID:</div>
+                        <td ><%= @data[index]["requester_id"] %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Assignee ID:</div>
+                        <td ><%= @data[index]["assignee_id"] %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Ticket Created At:</div>
+                        <td ><%= Time.parse(@data[index]["created_at"]).strftime("%Y/%b/%d %H:%M:%S") %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Ticket Updated At:</div>
+                        <td ><%= Time.parse(@data[index]["updated_at"]).strftime("%Y/%b/%d %H:%M:%S") %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Ticket Subject:</div>
+                        <td ><%= @data[index]["subject"] %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Ticket Raw Subject:</div>
+                        <td ><%= @data[index]["raw_subject"] %></td>
+                    </div>
+
+                    <div>
+                    <div class="borderexample">Tags:</div>
+                        <td ><%= @data[index]["tags"].map { |word| word.to_s.prepend("#")}.join(' ') %></td>
+                    </div>
+
+                    <div>
+                        <div class="borderexample">Ticket Description:
+                    </div>
+                    <div class="detailborder">
+                        <td><%= @data[index]["description"] %></td>
+                    </div>
+                    </div>
+                    </tr>
+                </div>
+                <% end %>
+            <%end%>
+            <br />
+            <br />
+            <hr />
+            
+            <% if @data.length > 25 %>
+                <a class="pagenumber" href="/">1</a>
+                <%  (1...(@data.length)/25).each do |index| %>
+                    <a class="pagenumber" href="/?page=<%=index+1 %>">
+                    <%= index+1 %>
+                </a>
+            <% end %>
+        <% end %>
+        <% else %>
+            <p>Error in loading Ticket List View</p>
+        <% end %>
+
+  </body>
+</html>
