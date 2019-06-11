@@ -22,7 +22,7 @@ iii)  https://gorails.com/setup/ubuntu/19.04      - For Ubuntu
 
 For Windows (Ubuntu Bash)
 ```bash
-cd /mnt/c/Users/username/zendeskCodingChallenge
+cd /mnt/c/Users/username/zendeskCodingChallenge/codingChallenge
 ```
 
 For Mac 
@@ -34,8 +34,58 @@ cd /zendeskCodingChallenge
 ```bash
 code .
 ```
-
-3. To start the web server
+3.  Install bundle before running the project, to ensure all gems & versions are installed
 ```bash
-rails server
+bundle install
 ```
+
+4.  Please request a configuration value file from the author of this source code. The purpose of configuration value file is to to securely configure Rails applications. Configuration values often include sensitive information. The configuration value file will named as "application.yml".
+```bash
+The file of "application.yml" should be put into "Users/username/zendeskCodingChallenge/codingChallenge/config/*"
+```
+
+5.  To start the web server
+```bash
+rails s
+```
+
+# Documentation of ZendeskCodingChallenge
+### Model
+```
+File location: "/codingChallenge/app/models/tickets.rb" 
+```
+
+The file of "tickets.rb" is the class file of Tickets. It uses to initiate & call all the tickets existed in the Zendesk account. It can also use to call a specific ticket by pass the parameter value of ticket ID. Configuration file is needed in this object to call the API from Zendesk with authetication credential.
+
+### View
+```
+File location: "/codingChallenge/app/models/views/*" 
+```
+
+There a total of 2 view object created in this project which is "home_page" & "search_specific". 
+##### "home_page"
+To show all the list of tickets exist in the account.
+##### "search_specific"
+To show specific ticket exist in the accoun by input value from the ticket ID.
+
+### Controller
+```
+File location: "/codingChallenge/app/models/controllers/*" 
+```
+
+There a total of 2 controller object created in this project which is "home_page_controller.rb" & "search_specific_controller.rb". 
+##### "home_page_controller.rb"
+To receive the value from model object of a list of tickets & pass to view object by showing on the front-end.
+##### "search_specific_controller.rb"
+To receive the value from view object of ticket ID & pass to the model object for retrieving specific ticket's information.
+
+### Testing
+```
+File location: "/codingChallenge/test/controllers/*" 
+```
+
+There a total of 2 testing file created in this project which is "home_page_controller_test.rb" & "search_specific_controller_test.rb". 
+##### "home_page_controller_test.rb"
+To test all the functions declared in "home_page_controller.rb". Testing include the size of JSON API Array & route testing.
+##### "search_specific_controller_test.rb"
+To test all the functions declared in "search_specific_controller.rb". Testing include the correctness of JSON API, fault testing & route testing"
