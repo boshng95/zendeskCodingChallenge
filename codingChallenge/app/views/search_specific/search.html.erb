@@ -26,7 +26,7 @@
 
     <%-# If ticket ID is retrieve correctly then show ticket information  -%>
     <%-# else will show error message  -%>
-    
+    <% puts @ticketInformation %>
     <% if @ticketInformation["id"] != nil %>
         <div>
             <div class="borderexample"> Ticket ID: </div> 
@@ -79,6 +79,8 @@
     <% elsif @ticketInformation["error"] == "InvalidEndpoint" %>
         <p>Please key in Ticket ID</p>
         <p>Ticket ID range from 202 - 301</p>
+    <% elsif @ticketInformation["error"] == "Couldn't authenticate you" %>
+        <p>Please request authentication credential from the author</p>
     <% end %>
 
 
